@@ -1,7 +1,24 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from pydan import comment
 
-router = APIRouter()
+from sqlalchemy.orm import Session
+from db.engine import get_db
+from db.models import Commentss
 
-@router.get("/comments")
-async def comments():
-    return {}
+
+router = APIRouter(
+    prefix="/comments",
+    tags=["comments"]
+)
+
+@router.get("/", response_model=list[comment.ReadComments])
+async def comments(db: Session = Depends(get_db)):
+    return db.query(Commentss).all()
+
+@router.post("/", response_model=comment.CreateComment)
+async def create_comment(comm: comment.CreateComment, db: Session = Depends(get_db)):
+    con = Commentss(description=comm.description)
+    db.add(con)
+    db.commit()
+    db.refresh(con)
+    return con
