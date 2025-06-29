@@ -1,0 +1,25 @@
+# Исключаем виртуальное окружение
+venv/
+VENV/
+env/
+ENV/
+
+# Исключаем PyCharm
+.idea/
+
+# Исключаем базы данных
+*.db
+*.sqlite3
+
+
+# Файлы Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Логи
+*.log
+
+# Файлы ОС
+.DS_Store
+Thumbs.db
