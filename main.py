@@ -4,6 +4,8 @@ from fastapi import FastAPI
 from routers.comments import router as comments_router
 from routers.users import router as users_router
 from db.engine import init_db
+from db import models
+from db.engine import engine
 
 init_db()
 

@@ -15,10 +15,3 @@ router = APIRouter(
 async def comments(db: Session = Depends(get_db)):
     return db.query(Commentss).all()
 
-@router.post("/", response_model=comment.CreateComment)
-async def create_comment(comm: comment.CreateComment, db: Session = Depends(get_db)):
-    con = Commentss(description=comm.description)
-    db.add(con)
-    db.commit()
-    db.refresh(con)
-    return con

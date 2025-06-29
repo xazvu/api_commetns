@@ -11,7 +11,7 @@ class User(Base):
     name: Mapped[str] = mapped_column()
     email: Mapped[str] = mapped_column()
 
-    comments: Mapped[list["Comment"]] = relationship(back_populates="user", cascade="all, delete")
+    comments: Mapped[list["Commentss"]] = relationship("Commentss", back_populates="user", cascade="all, delete")
 
 
 class Commentss(Base):
