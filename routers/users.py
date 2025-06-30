@@ -1,11 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
-# from pydan import
 
 from sqlalchemy.orm import Session
 from db.engine import get_db
-from db.models import User, Commentss
-from db import models
-
+from db.models import User
 from pydan import user
 
 router = APIRouter(
@@ -27,15 +24,8 @@ async def comments(us: user.CreateUser, db: Session = Depends(get_db)):
             status_code=400,
             detail="Email already exists"
         )
-    users = User(name=us.name, email=us.email)
+    users = User(name=us.name, email=us.email, comment=us.comment)
     db.add(users)
     db.commit()
     db.refresh(users)
-
-    if us.comment:  # если есть комментарий, добавляем
-        comment = Commentss(description=us.comment.description, user_id=users.id)
-        db.add(comment)
-        db.commit()
-        db.refresh(users)
-
     return users
